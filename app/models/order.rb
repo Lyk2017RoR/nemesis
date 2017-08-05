@@ -17,4 +17,16 @@
 
 class Order < ApplicationRecord
   belongs_to :user
+  has_many :order_items, inverse_of: :order, dependent: :destroy
+
+  validates :txn_date, presence: true
+
+  enum status: [:pending, :completed, :cancelled]
+
+  after_initialize :default_status
+
+  private
+    def default_status
+      self.status ||= :pending
+    end
 end

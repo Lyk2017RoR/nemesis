@@ -28,7 +28,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :orders
+  has_many :orders, inverse_of: :user
   has_one :profile, dependent: :destroy
 
   # validates :terms_of_use,  acceptance: true

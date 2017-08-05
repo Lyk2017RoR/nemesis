@@ -25,8 +25,8 @@ class Profile < ApplicationRecord
 
   belongs_to :user
 
-  validates :first_name,  presence: true
-  validates :last_name,   presence: true
+  validates :first_name,  presence: true, length: { maximum: 64 }
+  validates :last_name,   presence: true, length: { maximum: 128 }
   validates :birth_date, presence: true
   validates :phone,   :presence => {:message => 'Bad number error!'},
   :numericality => true,
@@ -56,10 +56,10 @@ class Profile < ApplicationRecord
       'https://www.gravatar.com/avatar/',
       Digest::MD5.hexdigest(user.email)
       ].join('')
-    end
-
-    def titleize_attributes
-      self.first_name = first_name.titleize
-      self.last_name = last_name.titleize
-    end
   end
+
+  def titleize_attributes
+    self.first_name = first_name.titleize
+    self.last_name = last_name.titleize
+  end
+end
