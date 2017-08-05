@@ -27,4 +27,15 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  has_many :orders
+  has_one :profile, dependent: :destroy
+
+  # validates :terms_of_use,  acceptance: true
+
+  accepts_nested_attributes_for :profile
+
+  def full_name
+    [profile.first_name, profile.last_name].join(' ') if profile.present?
+  end
 end
